@@ -46,9 +46,8 @@ function createItemsFromLine(line) {
         }
     });
 
-    const locale = 'ru';
-    lower.sort((a, b) => a.localeCompare(b, locale));
-    upper.sort((a, b) => a.localeCompare(b, locale));
+    lower.sort((a, b) => a.localeCompare(b));
+    upper.sort((a, b) => a.localeCompare(b));
     numbers.sort((a, b) => Number(a) - Number(b));
 
     let all = [];
@@ -161,7 +160,6 @@ function randColor() {
         const elem = document.getElementById(id);
         if (!elem) return;
 
-        // если впервые переносим в блок 2 – задаём случайный цвет
         if (container.id === 'block2') {
             if (!items[id].randomColor) {
                 items[id].randomColor = randColor();
@@ -169,12 +167,19 @@ function randColor() {
             elem.style.backgroundColor = items[id].randomColor;
         }
 
-        // если переносим обратно в блок 3 – восстанавливаем исходный цвет
         if (container.id === 'block3') {
             elem.style.backgroundColor = items[id].originalColor;
+            elem.classList.remove('pill-floating');
+            elem.style.left = '';
+            elem.style.top = '';
         }
 
         container.appendChild(elem);
+
+        if (container.id === 'block2') {
+            elem.classList.add('pill-floating');
+            placeElementWithinBlock2(elem, e);
+        }
 
         if (container.id === 'block3') {
             reorderBlock3();
@@ -190,3 +195,17 @@ function reorderBlock3() {
     children.forEach(ch => block3.appendChild(ch));
 }
 
+function placeElementWithinBlock2(elem, event) {
+    const rect = block2.getBoundingClientRect();
+    const elemWidth = elem.offsetWidth || 140;
+    const elemHeight = elem.offsetHeight || 42;
+
+    let left = event.clientX - rect.left - elemWidth / 2;
+    let top = event.clientY - rect.top - elemHeight / 2;
+
+    left = Math.max(0, Math.min(left, rect.width - elemWidth));
+    top = Math.max(0, Math.min(top, rect.height - elemHeight));
+
+    elem.style.left = `${left}px`;
+    elem.style.top = `${top}px`;
+}

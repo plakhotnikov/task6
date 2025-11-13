@@ -8,12 +8,6 @@
 <body>
 <h2>Задание «Слова» – вариант 1</h2>
 
-<div class="controls">
-    <input id="inputLine" type="text"
-           placeholder="Введите строку, слова через тире, например: лес - бочка-бык- крик - 3 - Бок">
-    <button id="parseBtn">Разобрать</button>
-</div>
-
 <!-- Блок 3 -->
 <div id="block3-wrapper">
     <div id="block3-title">Блок 3 (исходные отсортированные элементы)</div>
@@ -30,6 +24,11 @@
     <!-- Блок 1 -->
     <div id="block1-wrapper">
         <div id="block1-title">Блок 1 (красное поле + информация)</div>
+        <div class="controls">
+            <input id="inputLine" type="text"
+                   placeholder="Введите строку, слова через тире, например: лес - бочка-бык- крик - 3 - Бок">
+            <button id="parseBtn">Разобрать</button>
+        </div>
         <div id="output"></div>
         <div id="click-info">Нажмите на элемент в синем блоке, чтобы слово появилось здесь.</div>
     </div>
